@@ -2,8 +2,6 @@ version: "3"
 services:
   flserver:
     env_file: environment.env
-    environment:
-      - WINEARCH=win32
     build: .
     restart: unless-stopped
     image: flserver:1.2
