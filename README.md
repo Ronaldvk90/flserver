@@ -22,7 +22,7 @@ WINEARCH=The architecture of wine. whether if it's 32 or 64 bit. Again, the defa
 
 Edit the environment.env file to your needs.
 
-then you just have to do a "make install" on your docker host, and your vnc server instanse is ready.
+then you just have to do a "make install" on your docker host, and your RDP server instanse is ready.
 
 It will also create a volume which is the home directory for the fluser, where the wine files will be installed.
 If you don't have make installed, you can just run "docker compose up".
@@ -33,6 +33,6 @@ Rename Ioncross exefile to **IFSO.exe**
 **Note! It will allways install a fluxbox menu entry for IFSO, even if not installed. If you are not planning to use or install it, just ignore the entry**
 
 # Final step Mr. Trent.
-connect a VNC client on port 5900 and password to the docker host ip.
-Open a Xterm and run firstrun.sh from the root dir like, "./firstrun.sh".
+connect a rdp client and type the username and password of the docker host container ip.
+Open the flusbox menu and it will automaticaly show the installer.
 This will install the server. After installing Freelancer, just run the server from the fluxbox menu and happy roaming the universe Trent! :D
