@@ -1,6 +1,9 @@
 install:
 	@echo "Installing the freelancer server"
 	docker compose up -d
+install-debug:
+	@echo "Debug installer"
+	docker compose up
 clean:
 	@echo "removing the freelancer server"
 	docker compose down

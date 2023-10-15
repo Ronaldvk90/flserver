@@ -1,10 +1,29 @@
 #!/bin/bash
 
-#Set your timezone
+if [ -d "/home/$USERNAME" ]; then
+
+# Set your timezone
+ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
+
+# Continue without parts of the user creation
+echo "Not the first time the container runs. Skipping parts of the user creation"
+groupadd --gid $USER_GID $USERNAME
+useradd --uid $USER_UID --gid $USER_GID -M $USERNAME
+echo "$USERNAME:$PASSWORD" | chpasswd
+chsh -s /bin/bash $USERNAME
+
+xrdp-sesman
+xrdp --nodaemon
+
+else
+
+echo "First time the container is run. Arrange some stuff for you."
+
+# Set your timezone
 ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
 
 # Prepare a user for the server
-groupadd --gid $USER_GID $USERNAME 
+groupadd --gid $USER_GID $USERNAME
 useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
 echo "$USERNAME:$PASSWORD" | chpasswd
 chsh -s /bin/bash $USERNAME
@@ -31,6 +50,7 @@ cat > /home/$USERNAME/.fluxbox/flmenu <<EOF3
         [exec] (Freelancer server Installer) {x-terminal-emulator -T "Bash" -e /firstrun.sh}
 [END]
 EOF3
+
 chown -R $USERNAME:$USERNAME /home/$USERNAME/.fluxbox
 
 # Prepare the first run of FLserver
@@ -72,3 +92,4 @@ chmod +x /firstrun.sh
 
 xrdp-sesman
 xrdp --nodaemon
+fi
