@@ -12,6 +12,21 @@ useradd --uid $USER_UID --gid $USER_GID -M $USERNAME
 echo "$USERNAME:$PASSWORD" | chpasswd
 chsh -s /bin/bash $USERNAME
 
+# Make sure DBUS and xrdp-sesman run
+if [ -f "/run/dbus/pid" ]; then
+    rm /run/dbus/pid
+fi
+
+if [ ! -d "/run/dbus" ]; then
+  mkdir -p /run/dbus
+fi
+
+dbus-daemon --system
+
+if [ -f "/var/run/xrdp-sesman.pid" ]; then
+    rm /var/run/xrdp-sesman.pid
+fi
+
 xrdp-sesman
 xrdp --nodaemon
 
@@ -89,6 +104,21 @@ EOF4
 echo "fluxbox" | tee /home/$USERNAME/.xsession
 chown -R $USERNAME:$USERNAME /home/$USERNAME/.xsession
 chmod +x /firstrun.sh
+
+# Make sure DBUS and xrdp-sesman run
+if [ -f "/run/dbus/pid" ]; then
+rm /run/dbus/pid
+fi
+
+if [ ! -d "/run/dbus" ]; then
+mkdir -p /run/dbus
+fi
+
+dbus-daemon --system
+
+if [ -f "/var/run/xrdp-sesman.pid" ]; then
+rm /var/run/xrdp-sesman.pid
+fi
 
 xrdp-sesman
 xrdp --nodaemon
