@@ -5,6 +5,15 @@ if [ -d "/home/$USERNAME" ]; then
 # Set your timezone
 ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
 
+# Set the environment world wide (thanks Xantios)
+cat >>  /etc/profile <<EOF
+export USER_UID="$USER_UID"
+export USER_GID="$USER_GID"
+export USERNAME="$USERNAME"
+export WINEPREFIX="$WINEPREFIX"
+export WINEARCH="$WINEARCH"
+EOF
+
 # Continue without parts of the user creation
 echo "Not the first time the container runs. Skipping parts of the user creation"
 groupadd --gid $USER_GID $USERNAME
