@@ -8,8 +8,11 @@ clean:
 	@echo "removing the freelancer server"
 	docker compose down
 
-clean-all:
-	@echo -e Removing "\033[0;31m!!! AND CLEANING !!!\033[0m" all files
+clean-all: checker
+
+checker:
+	@echo -n "Removing and cleaning all files, container and image. Are you sure you want to continue? (y/n) " && read ans && [ $${ans:-N} = y ]
 	docker compose down
 	docker volume rm flserver_flhome
-	docker image rm flserver:1.2
+	docker image rm flserver:1.3
+.PHONY: clean check_clean

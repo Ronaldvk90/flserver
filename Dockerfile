@@ -1,15 +1,10 @@
-FROM ubuntu:22.04
-ARG DEBIAN_FRONTEND=noninteractive
+FROM opensuse/leap:15.5
 
 # Install the nescesarry packages
-RUN dpkg --add-architecture i386
-RUN apt update -y ; apt upgrade -y ; apt install -y xrdp fluxbox xterm vim openssh-server wget curl cabextract tzdata
-RUN mkdir -pm755 /etc/apt/keyrings
-RUN wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
-RUN wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
-RUN apt update ; apt upgrade -y ; apt install -y --install-recommends winehq-stable
-RUN wget -O /bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
-RUN chmod +x /bin/winetricks
+RUN zypper update -y
+RUN zypper --non-interactive in -t pattern xfce
+RUN zypper --non-interactive install xrdp xterm vim openssh-server wget curl cabextract xfce4-terminal wine winetricks file
+RUN winetricks --self-update
 
 # Prepare the files
 COPY run.sh /.run.sh
