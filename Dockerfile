@@ -11,5 +11,4 @@ COPY run.sh /.run.sh
 RUN chmod +x /.run.sh
 
 # Finaly. run the server!
-#ENTRYPOINT [ "/.run.sh" ]
 ENTRYPOINT /.run.sh
