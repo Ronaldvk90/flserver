@@ -1,7 +1,7 @@
 # Welcome to my docker Freelancer server!
 
 The goal of this server is basically to bring a ready to run instant flserver in docker for you. Based on xrdp. :)
-It's a xfce rdp server with all the basic wine tooling automatically installed when running the install script on the desktop.
+It's a xfce rdp server with all the basic wine tooling automatically installed when running the installer in the xfce menu in "other".
 
 At building it will create a user so it won't run as root.
 Thanks to Microsoft's directplay however, i couldn't run it without network "host" mode...
@@ -31,7 +31,7 @@ Next the **freelancer folder**! Just place the extracted iso and (if you want to
 Rename Ioncross exefile to **IFSO.exe**
 
 # Please note!
-If you use IFSO, be sure to download the latest **FLAdmin.dll** file from the internet. Put it in the wine SYSWOW64 directory. Or else starting and stopping the server from IFSO won't work correctly. :)
+If you use IFSO, be sure to download the latest **FLAdmin.dll** file from the internet. Put it in the wine system32 directory. Or else starting and stopping the server from IFSO won't work correctly. :)
 
 # Final step Mr. Trent.
 connect a rdp client and type the username and password of the docker host container ip.

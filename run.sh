@@ -4,6 +4,7 @@ if [ -d "/home/$USERNAME" ]; then
 
 # Set your timezone
 ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
+echo "$TZ" > /etc/timezone
 
 # Continue without parts of the user creation
 echo "Not the first time the container runs. Skipping parts of the user creation"
@@ -44,24 +45,19 @@ echo "First time the container is run. Arrange some stuff for you."
 
 # Set your timezone
 ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
+echo "$TZ" > /etc/timezone
 
 # Prepare a user for the server
 useradd --uid $USER_UID -m $USERNAME
 echo "$USERNAME:$PASSWORD" | chpasswd
 chsh -s /bin/bash $USERNAME
 
-# Set the environment world wide (thanks Xantios)
-cat >>  /home/$USERNAME/.bashrc <<EOF2
-export USER_UID="$USER_UID"
-export USERNAME="$USERNAME"
-EOF2
-
 # Prepare the first run of FLserver
-cat <<EOF3 >> /home/$USERNAME/firstrun.sh
+cat <<EOF2 >> /home/$USERNAME/firstrun.sh
 #!/bin/bash
 
 # First Create a wine32 prefix.
-wine wineboot
+export WINEARCH=win32
 
 # Set the Windows version needed.
 winetricks -q winxp
@@ -81,7 +77,7 @@ wine /freelancer/IFSO.exe
 else
 echo -e "\033[0;33mIoncross FLserver Operator not found. You can install it later if you want to. :)\033[0m"
 fi
-EOF3
+EOF2
 
 # Make sure DBUS and xrdp-sesman run
 if [ -f "/run/dbus/pid" ]; then
@@ -99,14 +95,14 @@ rm /var/run/xrdp-sesman.pid
 fi
 
 rm /etc/xrdp/startwm.sh
-cat >> /etc/xrdp/startwm.sh <<EOF4
+cat >> /etc/xrdp/startwm.sh <<EOF3
 #!/bin/sh
 startxfce4
-EOF4
+EOF3
 chmod +x /etc/xrdp/startwm.sh
 
-mkdir /home/$USERNAME/Desktop
-cat >> /home/$USERNAME/Desktop/Firstrun.desktop <<EOF5
+
+cat >> /usr/share/applications/Firstrun.desktop <<EOF4
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -117,13 +113,10 @@ Icon=applications-games
 Path=
 Terminal=true
 StartupNotify=false
-EOF5
+EOF4
 
-chown $USERNAME:users /home/$USERNAME/Desktop
-chown $USERNAME:users /home/$USERNAME/Desktop/Firstrun.desktop
-chown $USERNAME:users /home/$USERNAME/firstrun.sh
 chmod +x /home/$USERNAME/firstrun.sh
-chmod +x /home/$USERNAME/Desktop/Firstrun.desktop
+chmod +x /usr/share/applications/Firstrun.desktop
 
 xrdp-sesman
 xrdp --nodaemon

@@ -14,5 +14,5 @@ checker:
 	@echo -n "Removing and cleaning all files, container and image. Are you sure you want to continue? (y/n) " && read ans && [ $${ans:-N} = y ]
 	docker compose down
 	docker volume rm flserver_flhome
-	docker image rm flserver:1.3
+	docker image rm flserver:1.4
 .PHONY: clean check_clean
