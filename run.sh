@@ -1,44 +1,6 @@
 #!/bin/bash
 
-if [ -d "/home/$USERNAME" ]; then
-
-# Set your timezone
-ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
-echo "$TZ" > /etc/timezone
-
-# Continue without parts of the user creation
-echo "Not the first time the container runs. Skipping parts of the user creation"
-useradd --uid $USER_UID -M $USERNAME
-echo "$USERNAME:$PASSWORD" | chpasswd
-chsh -s /bin/bash $USERNAME
-
-# Make sure DBUS and xrdp-sesman run
-if [ -f "/run/dbus/pid" ]; then
-    rm /run/dbus/pid
-fi
-
-if [ ! -d "/run/dbus" ]; then
-  mkdir -p /run/dbus
-fi
-
-dbus-daemon --system
-
-if [ -f "/var/run/xrdp-sesman.pid" ]; then
-    rm /var/run/xrdp-sesman.pid
-fi
-
-rm /etc/xrdp/startwm.sh
-cat >> /etc/xrdp/startwm.sh <<EOF
-#!/bin/sh
-startxfce4
-EOF
-chmod +x /etc/xrdp/startwm.sh
-
-xrdp-sesman
-xrdp --nodaemon
-
-else
-
+if ! [ -d "/home/$USERNAME" ]; then
 
 ### First run script! ###
 echo "First time the container is run. Arrange some stuff for you."
@@ -117,6 +79,45 @@ EOF4
 
 chmod +x /home/$USERNAME/firstrun.sh
 chmod +x /usr/share/applications/Firstrun.desktop
+
+xrdp-sesman
+xrdp --nodaemon
+
+else
+
+### Home dir exist run script! ###
+echo "Not the first time the container is run. Arrange less stuff for you."
+
+# Set your timezone
+ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
+echo "$TZ" > /etc/timezone
+
+# Continue without parts of the user creation
+useradd --uid $USER_UID -M $USERNAME
+echo "$USERNAME:$PASSWORD" | chpasswd
+chsh -s /bin/bash $USERNAME
+
+# Make sure DBUS and xrdp-sesman run
+if [ -f "/run/dbus/pid" ]; then
+    rm /run/dbus/pid
+fi
+
+if [ ! -d "/run/dbus" ]; then
+  mkdir -p /run/dbus
+fi
+
+dbus-daemon --system
+
+if [ -f "/var/run/xrdp-sesman.pid" ]; then
+    rm /var/run/xrdp-sesman.pid
+fi
+
+rm /etc/xrdp/startwm.sh
+cat >> /etc/xrdp/startwm.sh <<EOF
+#!/bin/sh
+startxfce4
+EOF
+chmod +x /etc/xrdp/startwm.sh
 
 xrdp-sesman
 xrdp --nodaemon
