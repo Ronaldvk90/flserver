@@ -26,6 +26,8 @@ If you don't have make installed, you can just run "docker compose up".
 Next the **freelancer folder**! Just place the extracted iso and (if you want to) the Ioncross Freelancer server operator files in the freelancer folder.
 Rename Ioncross exefile to **IFSO.exe**
 
+I will deliver a samba server for this purpose in the compose file. Just connect via the terminal **mount -t cifs //<DOCKER_HOST_IP>/freelancer mount -o username=fluser**, or browse via windows **\\<DOCKER_HOST_IPr\freelancer** or any other way you prefer.
+
 # Please note!
 If you use IFSO, be sure to download the latest **FLAdmin.dll** file from the internet. Put it in the wine system32 directory. Or else starting and stopping the server from IFSO won't work correctly. :)
 
