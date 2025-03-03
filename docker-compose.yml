@@ -15,7 +15,7 @@ services:
     env_file: .env
     build: samba/
     restart: unless-stopped
-#    image: ronaldvk90/samba:latest
+    image: ronaldvk90/samba:latest
     ports:
       - "137:137/udp"
       - "138:138/udp"
