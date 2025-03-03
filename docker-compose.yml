@@ -1,15 +1,17 @@
 services:
+
   flserver:
-    env_file: environment.env
+    hostname: flserver
+    env_file: .env
     build: .
     restart: unless-stopped
-    image: flserver:1.4
-    cap_add:
-      - NET_ADMIN
-    network_mode: "host"
+    image: ronaldvk90/flserver:latest
+    ports:
+      - "3389:3389"
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./freelancer:/freelancer
       - flhome:/home
+
 volumes:
   flhome:
-    external: false

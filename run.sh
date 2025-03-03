@@ -5,12 +5,8 @@ if ! [ -d "/home/$USERNAME" ]; then
 ### First run script! ###
 echo "First time the container is run. Arrange some stuff for you."
 
-# Set your timezone
-ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
-echo "$TZ" > /etc/timezone
-
 # Prepare a user for the server
-useradd --uid $USER_UID -m $USERNAME
+useradd -m $USERNAME
 echo "$USERNAME:$PASSWORD" | chpasswd
 chsh -s /bin/bash $USERNAME
 
@@ -88,12 +84,8 @@ else
 ### Home dir exist run script! ###
 echo "Not the first time the container is run. Arrange less stuff for you."
 
-# Set your timezone
-ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
-echo "$TZ" > /etc/timezone
-
 # Continue without parts of the user creation
-useradd --uid $USER_UID -M $USERNAME
+useradd -m $USERNAME
 echo "$USERNAME:$PASSWORD" | chpasswd
 chsh -s /bin/bash $USERNAME
 

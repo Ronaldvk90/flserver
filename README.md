@@ -12,17 +12,13 @@ Please check his github repo at https://github.com/Xantios :)
 # Now! The business end.
 
 **Environment file!** Don't forget about this one ;)
-USER_UID=your user id (you can type "echo $UID for the id on your system)
 USERNAME=the username you want to give the flserver (I would suggest fluser)
-TZ=your timezone. example, "Europe/NewLondon"
 PASSWORD=Your verry secret password!
 
-Edit the environment.env file to your needs.
+Copy the .env.example to .env.
+Edit the env file to your needs.
 
-then you just have to do a "make install" on your docker host, and your RDP server instanse is ready.
-Make clean will stop the container. It will just do a "docker compose down".
-Make clean-all will *DELETE* the container and home volume.
-Make install-debug will do a compose up verbose start
+Then just docker compose up
 
 It will also create a volume which is the home directory for the fluser, where the wine files will be installed.
 If you don't have make installed, you can just run "docker compose up".
