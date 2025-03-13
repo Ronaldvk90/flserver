@@ -5,8 +5,7 @@ services:
     build: flserver/
     restart: unless-stopped
     image: ronaldvk90/flserver:latest
-    ports:
-      - "3389:3389"
+    network_mode: host
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./freelancer:/freelancer
