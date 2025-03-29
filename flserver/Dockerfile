@@ -17,8 +17,14 @@ RUN wget  https://raw.githubusercontent.com/Winetricks/winetricks/master/src/win
 RUN chmod +x /usr/bin/winetricks
 
 # Prepare the files
-COPY run.sh /.run.sh
-RUN chmod +x /.run.sh
+COPY Firstrun.desktop /usr/share/applications/Firstrun.desktop
+RUN chmod +x /usr/share/applications/Firstrun.desktop
+COPY startwm.sh /etc/xrdp/startwm.sh
+RUN chmod +x /etc/xrdp/startwm.sh
+COPY firstrun.sh /firstrun.sh
+RUN chmod +x /firstrun.sh
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
 
 # Finaly. run the server!
-ENTRYPOINT [ "/.run.sh" ]
+ENTRYPOINT [ "/run.sh" ]

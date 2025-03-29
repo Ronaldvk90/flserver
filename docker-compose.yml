@@ -7,9 +7,10 @@ services:
     image: ronaldvk90/flserver:latest
     network_mode: host
     volumes:
+      - etc:/etc
       - /etc/localtime:/etc/localtime:ro
       - ./freelancer:/freelancer
-      - flhome:/home
+      - home:/home
   samba:
     env_file: .env
     build: samba/
@@ -24,4 +25,5 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./freelancer:/freelancer
 volumes:
-  flhome:
+  etc:
+  home:
