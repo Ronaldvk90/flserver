@@ -23,8 +23,8 @@ COPY startwm.sh /etc/xrdp/startwm.sh
 RUN chmod +x /etc/xrdp/startwm.sh
 COPY firstrun.sh /firstrun.sh
 RUN chmod +x /firstrun.sh
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Finaly. run the server!
-ENTRYPOINT [ "/run.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
